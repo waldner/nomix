@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "NoMix",
-  "version": "1.1",
+  "version": "1.2",
   "description": "Right-click on a link to copy it/open in new tab with text processing.",
   "permissions": [
     "menus",

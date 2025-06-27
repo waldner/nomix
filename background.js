@@ -8,10 +8,16 @@ function processLink(link) {
   // Example processing: convert to uppercase
   // remove fucking yt playlist
   //https://www.youtube.com/watch?v=dQYjJC4L69M&list=RDdQYjJC4L69M&start_radio=1&pp=oAcB
-  
-  const r = /^(https:\/\/www.youtube.com)\/.*v=([^&]*).*/;
-  var newLink = link.replace(r, '$1/watch?v=$2');
+  //https://www.youtube.com/shorts/TU9s1eNVF-A
 
+  const rwatch = /^(https:\/\/www.youtube.com)\/.*v=([^&]*).*/;
+  const rshort = /^(https:\/\/www.youtube.com)\/shorts\/([^&]*)/;
+
+  if (rwatch.test(link)) {  
+      newLink = link.replace(rwatch, '$1/watch?v=$2');
+  } else {
+      newLink = link.replace(rshort, '$1/watch?v=$2');
+  }
   return newLink;
 }
 
@@ -50,7 +56,7 @@ async function addMenusAndListener(){
     id: id,
     title: "Copy Processed Link",
     contexts: ["link"],
-    targetUrlPatterns: ["*://www.youtube.com/watch*"]
+    targetUrlPatterns: ["*://www.youtube.com/watch*", "*://www.youtube.com/shorts*"]
   });
   callbacks[id] = copyToClipboard;
 
@@ -59,7 +65,7 @@ async function addMenusAndListener(){
     id: id,
     title: "Open Processed Link in Current Tab",
     contexts: ["link"],
-    targetUrlPatterns: ["*://www.youtube.com/watch*"]
+    targetUrlPatterns: ["*://www.youtube.com/watch*", "*://www.youtube.com/shorts*"]
   });
 
   callbacks[id] = openLinkInCurrentTab;
@@ -69,7 +75,7 @@ async function addMenusAndListener(){
     id: id,
     title: "Open Processed Link in New Tab",
     contexts: ["link"],
-    targetUrlPatterns: ["*://www.youtube.com/watch*"]
+    targetUrlPatterns: ["*://www.youtube.com/watch*", "*://www.youtube.com/shorts*"]
   });
  
   callbacks[id] = openLinkInNewTab;
